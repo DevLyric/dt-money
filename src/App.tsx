@@ -62,15 +62,15 @@ function App() {
                     {...settings}
                     className="container mx-auto flex items-center justify-between gap-8 px-5"
                 >
-                    <Dashboard title="Entradas" value={`R$ ${earnings}`} />
-                    <Dashboard title="Saidas" value={`R$ ${expenses}`} />
-                    <Dashboard title="Total" value={`R$ ${total}`} />
+                    <Dashboard type="Entradas" value={`R$ ${earnings}`} />
+                    <Dashboard type="Saidas" value={`R$ ${expenses}`} />
+                    <Dashboard type="Total" value={`R$ ${total}`} />
                 </Slider>
             ) : (
                 <div className="container mx-auto flex items-center justify-between gap-8 px-5">
-                    <Dashboard title="Entradas" value={`R$ ${earnings}`} />
-                    <Dashboard title="Saidas" value={`R$ ${expenses}`} />
-                    <Dashboard title="Total" value={`R$ ${total}`} />
+                    <Dashboard type="Entradas" value={`R$ ${earnings}`} />
+                    <Dashboard type="Saidas" value={`R$ ${expenses}`} />
+                    <Dashboard type="Total" value={`R$ ${total}`} />
                 </div>
             )}
             {showModal && (
