@@ -44,7 +44,7 @@ function Modal({ onSubmit, onCloseModal }: ModalProps) {
         <div className="absolute bottom-0 flex justify-center items-center w-full md:bottom-1/2">
             <form
                 onSubmit={handleSubmit}
-                className="flex flex-col p-8 gap-3 border bg-white w-full max-w-xl rounded-md"
+                className="flex flex-col p-8 gap-3 shadow bg-white w-full max-w-xl rounded-md"
             >
                 <div className="flex items-center justify-between">
                     <h3 className="text-xl font-medium">Nova Transição</h3>

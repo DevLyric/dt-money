@@ -13,7 +13,7 @@ function Header({ onToggleModal }: HeaderProps) {
             </div>
             <button
                 onClick={onToggleModal}
-                className="bg-[#00875f] text-white font-medium py-2 w-32 rounded"
+                className="bg-[#00875f] text-white font-medium py-3 w-32 rounded"
             >
                 Nova transição
             </button>

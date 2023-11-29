@@ -16,11 +16,21 @@ function App() {
     const [showModal, setShowModal] = useState(false);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
-    // dashboard values
-    const [earnings, setEarnings] = useState(0);
-    const [expenses, setExpenses] = useState(0);
-    const [total, setTotal] = useState(0);
+    // Carregar os valores do LocalStorage ao iniciar o componente
+    const [earnings, setEarnings] = useState(() => {
+        const storedValue = localStorage.getItem("earnings");
+        return storedValue ? parseInt(storedValue, 10) : 0;
+    });
 
+    const [expenses, setExpenses] = useState(() => {
+        const storedValue = localStorage.getItem("expenses");
+        return storedValue ? parseInt(storedValue, 10) : 0;
+    });
+
+    const [total, setTotal] = useState(() => {
+        const storedValue = localStorage.getItem("total");
+        return storedValue ? parseInt(storedValue, 10) : 0;
+    });
     useEffect(() => {
         const changeWidth = () => {
             setScreenWidth(window.innerWidth);
@@ -32,6 +42,13 @@ function App() {
             window.removeEventListener("resize", changeWidth);
         };
     }, []);
+
+    // Atualizar o LocalStorage sempre que os valores mudarem
+    useEffect(() => {
+        localStorage.setItem("earnings", earnings.toString());
+        localStorage.setItem("expenses", expenses.toString());
+        localStorage.setItem("total", total.toString());
+    }, [earnings, expenses, total]);
 
     const handleFormSubmit = (values: {
         description: string;
@@ -63,13 +80,13 @@ function App() {
                     className="container mx-auto flex items-center justify-between gap-8 px-5"
                 >
                     <Dashboard type="Entradas" value={`R$ ${earnings}`} />
-                    <Dashboard type="Saidas" value={`R$ ${expenses}`} />
+                    <Dashboard type="Saídas" value={`R$ ${expenses}`} />
                     <Dashboard type="Total" value={`R$ ${total}`} />
                 </Slider>
             ) : (
                 <div className="container mx-auto flex items-center justify-between gap-8 px-5">
                     <Dashboard type="Entradas" value={`R$ ${earnings}`} />
-                    <Dashboard type="Saidas" value={`R$ ${expenses}`} />
+                    <Dashboard type="Saídas" value={`R$ ${expenses}`} />
                     <Dashboard type="Total" value={`R$ ${total}`} />
                 </div>
             )}
@@ -80,7 +97,7 @@ function App() {
                 />
             )}
             <SearchTransactions />
-            <div className="container mx-auto px-5">
+            <div className="container mx-auto px-5 flex flex-col gap-5">
                 {transactionsCtx.transactions.length > 0 ? (
                     transactionsCtx.transactions.map((item, index) => (
                         <Table
