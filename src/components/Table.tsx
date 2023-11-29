@@ -22,7 +22,7 @@ function Table({ description, price, category, type }: TableProps) {
         <div className="w-full rounded border py-3 flex flex-col md:flex-row md:justify-between px-5">
             <div className="flex flex-col justify-center md:flex-row md:justify-between md:w-1/2">
                 <p>{description}</p>
-                <p style={{ color: textColor, fontSize: 20, fontWeight: 500 }}>
+                <p style={{ color: textColor, fontWeight: 500 }}>
                     R$ {formattedPrice}
                 </p>
             </div>

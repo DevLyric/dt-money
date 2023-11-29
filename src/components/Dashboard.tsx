@@ -10,7 +10,7 @@ function Dashboard({ title, value }: DashboardProps) {
                 <p>{title}</p>
                 <span>icon</span>
             </div>
-            <span className="text-xl font-medium">{value}</span>
+            <span className="font-medium">{value}</span>
         </div>
     );
 }
