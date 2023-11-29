@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import Header from "./components/Header";
 import Dashboard from "./components/Dashboard";
-import { SliderSettings } from "./type/sliderSettings";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import SearchTransition from "./components/SearchTransition";
+import { settings } from "./utils/utils";
+import Modal from "./components/Modal";
 
 function App() {
+    const [showModal, setShowModal] = useState(false);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -22,18 +24,9 @@ function App() {
         };
     }, []);
 
-    console.log(screenWidth);
-
-    const settings: SliderSettings = {
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-    };
-
     return (
         <div className="overflow-hidden flex flex-col gap-5">
-            <Header />
+            <Header onToggleModal={() => setShowModal(!showModal)} />
 
             {screenWidth < 640 ? (
                 <Slider
@@ -51,7 +44,7 @@ function App() {
                     <Dashboard title="Total" value="R$ 16.141,00" />
                 </div>
             )}
-
+            {showModal && <Modal />}
             <SearchTransition />
         </div>
     );
