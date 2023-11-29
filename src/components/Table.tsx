@@ -15,7 +15,7 @@ function Table({ description, price, category, type }: TableProps) {
             "-" +
             today.getDate();
 
-    const formattedPrice = type === "entrada" ? `-${price}` : price;
+    const formattedPrice = type === "entrada" ? price : `-${price}`;
     const textColor = type === "entrada" ? "green" : "red";
 
     return (
