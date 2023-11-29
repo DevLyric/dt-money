@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Transition } from "../type/transition";
+import { TransactionsType } from "../type/transactions";
 
 interface ModalProps {
     onSubmit: (inputValues: {
         description: string;
         price: string;
         category: string;
-        type: Transition;
+        type: TransactionsType;
     }) => void;
 }
 
@@ -15,7 +15,7 @@ function Modal({ onSubmit }: ModalProps) {
         description: "",
         price: "",
         category: "",
-        type: "entrada" as Transition
+        type: "entrada" as TransactionsType
     });
 
     const { description, price, category } = inputValues;
@@ -24,7 +24,7 @@ function Modal({ onSubmit }: ModalProps) {
         setInputValues({ ...inputValues, [field]: event });
     };
 
-    const handleTypeChange = (type: Transition) => {
+    const handleTypeChange = (type: TransactionsType) => {
         setInputValues({ ...inputValues, type: type });
     };
 
@@ -35,7 +35,7 @@ function Modal({ onSubmit }: ModalProps) {
             description: "",
             price: "",
             category: "",
-            type: "entrada" as Transition
+            type: "entrada" as TransactionsType
         });
     };
 

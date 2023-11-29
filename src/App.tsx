@@ -4,12 +4,14 @@ import Header from "./components/Header";
 import Dashboard from "./components/Dashboard";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import SearchTransition from "./components/SearchTransition";
+import SearchTransactions from "./components/SearchTransactions";
 import { settings } from "./utils/utils";
 import Modal from "./components/Modal";
-import { Transition } from "./type/transition";
+import { useTransaction } from "./context/TransactionsContext";
+import { TransactionsType } from "./type/transactions";
 
 function App() {
+    const transactionsCtx = useTransaction();
     const [showModal, setShowModal] = useState(false);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
@@ -29,8 +31,12 @@ function App() {
         description: string;
         price: string;
         category: string;
-        type: Transition;
+        type: TransactionsType;
     }) => {
+        transactionsCtx?.setTransactions([
+            ...transactionsCtx.transactions,
+            values
+        ]);
         console.log(values);
     };
 
@@ -55,7 +61,7 @@ function App() {
                 </div>
             )}
             {showModal && <Modal onSubmit={handleFormSubmit} />}
-            <SearchTransition />
+            <SearchTransactions />
         </div>
     );
 }

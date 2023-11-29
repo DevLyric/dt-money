@@ -1,4 +1,4 @@
-function SearchTransition() {
+function SearchTransactions() {
     return (
         <form className="container mx-auto px-5 flex items-center gap-5 my-3">
             <input
@@ -11,4 +11,4 @@ function SearchTransition() {
     );
 }
 
-export default SearchTransition;
+export default SearchTransactions;
