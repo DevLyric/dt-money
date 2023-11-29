@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { TransactionsType } from "../type/transactions";
 
 interface Transactions {
@@ -22,7 +22,14 @@ export const TransactionsProvider = ({
 }: {
     children: React.ReactNode;
 }) => {
-    const [transactions, setTransactions] = useState<Transactions[]>([]);
+    const [transactions, setTransactions] = useState(() => {
+        const storageTransactions = localStorage.getItem("transactions");
+        return storageTransactions ? JSON.parse(storageTransactions) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("transactions", JSON.stringify(transactions));
+    }, [transactions]);
 
     return (
         <TransactionsContext.Provider value={{ transactions, setTransactions }}>
