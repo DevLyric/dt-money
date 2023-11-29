@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import SearchTransition from "./components/SearchTransition";
 import { settings } from "./utils/utils";
 import Modal from "./components/Modal";
+import { Transition } from "./type/transition";
 
 function App() {
     const [showModal, setShowModal] = useState(false);
@@ -23,6 +24,15 @@ function App() {
             window.removeEventListener("resize", changeWidth);
         };
     }, []);
+
+    const handleFormSubmit = (values: {
+        description: string;
+        price: string;
+        category: string;
+        type: Transition;
+    }) => {
+        console.log(values);
+    };
 
     return (
         <div className="overflow-hidden flex flex-col gap-5">
@@ -44,7 +54,7 @@ function App() {
                     <Dashboard title="Total" value="R$ 16.141,00" />
                 </div>
             )}
-            {showModal && <Modal />}
+            {showModal && <Modal onSubmit={handleFormSubmit} />}
             <SearchTransition />
         </div>
     );
