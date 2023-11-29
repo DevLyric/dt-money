@@ -9,6 +9,7 @@ import { settings } from "./utils/utils";
 import Modal from "./components/Modal";
 import { useTransaction } from "./context/TransactionsContext";
 import { TransactionsType } from "./type/transactions";
+import Table from "./components/Table";
 
 function App() {
     const transactionsCtx = useTransaction();
@@ -37,7 +38,6 @@ function App() {
             ...transactionsCtx.transactions,
             values
         ]);
-        console.log(values);
     };
 
     return (
@@ -60,8 +60,28 @@ function App() {
                     <Dashboard title="Total" value="R$ 16.141,00" />
                 </div>
             )}
-            {showModal && <Modal onSubmit={handleFormSubmit} />}
+            {showModal && (
+                <Modal
+                    onSubmit={handleFormSubmit}
+                    onCloseModal={() => setShowModal(false)}
+                />
+            )}
             <SearchTransactions />
+            <div className="container mx-auto px-5">
+                {transactionsCtx.transactions.length > 0 ? (
+                    transactionsCtx.transactions.map(item => (
+                        <Table
+                            key={item.description}
+                            description={item.description}
+                            price={item.price}
+                            category={item.category}
+                            type={item.type}
+                        />
+                    ))
+                ) : (
+                    <p className="text-center">Adicione uma transação</p>
+                )}
+            </div>
         </div>
     );
 }

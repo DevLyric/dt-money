@@ -8,9 +8,10 @@ interface ModalProps {
         category: string;
         type: TransactionsType;
     }) => void;
+    onCloseModal: () => void;
 }
 
-function Modal({ onSubmit }: ModalProps) {
+function Modal({ onSubmit, onCloseModal }: ModalProps) {
     const [inputValues, setInputValues] = useState({
         description: "",
         price: "",
@@ -45,7 +46,15 @@ function Modal({ onSubmit }: ModalProps) {
                 onSubmit={handleSubmit}
                 className="flex flex-col p-8 gap-3 border bg-white w-full max-w-xl rounded-md"
             >
-                <h3 className="text-xl font-medium">Nova Transição</h3>
+                <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-medium">Nova Transição</h3>
+                    <button
+                        onClick={onCloseModal}
+                        className="text-xl font-medium"
+                    >
+                        x
+                    </button>
+                </div>
                 <input
                     type="text"
                     className="p-3 border rounded"
@@ -58,7 +67,7 @@ function Modal({ onSubmit }: ModalProps) {
                 <input
                     type="text"
                     className="p-3 border rounded"
-                    placeholder="Price"
+                    placeholder="Preço"
                     value={price}
                     onChange={e => handleInputChange("price", e.target.value)}
                 />
