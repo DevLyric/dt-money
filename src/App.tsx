@@ -16,6 +16,11 @@ function App() {
     const [showModal, setShowModal] = useState(false);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
+    // dashboard values
+    const [earnings, setEarnings] = useState(0);
+    const [expenses, setExpenses] = useState(0);
+    const [total, setTotal] = useState(0);
+
     useEffect(() => {
         const changeWidth = () => {
             setScreenWidth(window.innerWidth);
@@ -38,6 +43,14 @@ function App() {
             ...transactionsCtx.transactions,
             values
         ]);
+
+        if (values.type === "entrada") {
+            setEarnings(prevEarnings => prevEarnings + parseInt(values.price));
+            setTotal(prevTotal => prevTotal + parseInt(values.price));
+        } else {
+            setExpenses(prevExpenses => prevExpenses - parseInt(values.price));
+            setTotal(prevTotal => prevTotal - parseInt(values.price));
+        }
     };
 
     return (
@@ -49,15 +62,15 @@ function App() {
                     {...settings}
                     className="container mx-auto flex items-center justify-between gap-8 px-5"
                 >
-                    <Dashboard title="Entradas" value="R$ 17.400,00" />
-                    <Dashboard title="Saidas" value="R$ 1.259,00" />
-                    <Dashboard title="Total" value="R$ 16.141,00" />
+                    <Dashboard title="Entradas" value={`R$ ${earnings}`} />
+                    <Dashboard title="Saidas" value={`R$ ${expenses}`} />
+                    <Dashboard title="Total" value={`R$ ${total}`} />
                 </Slider>
             ) : (
                 <div className="container mx-auto flex items-center justify-between gap-8 px-5">
-                    <Dashboard title="Entradas" value="R$ 17.400,00" />
-                    <Dashboard title="Saidas" value="R$ 1.259,00" />
-                    <Dashboard title="Total" value="R$ 16.141,00" />
+                    <Dashboard title="Entradas" value={`R$ ${earnings}`} />
+                    <Dashboard title="Saidas" value={`R$ ${expenses}`} />
+                    <Dashboard title="Total" value={`R$ ${total}`} />
                 </div>
             )}
             {showModal && (
@@ -69,9 +82,9 @@ function App() {
             <SearchTransactions />
             <div className="container mx-auto px-5">
                 {transactionsCtx.transactions.length > 0 ? (
-                    transactionsCtx.transactions.map(item => (
+                    transactionsCtx.transactions.map((item, index) => (
                         <Table
-                            key={item.description}
+                            key={index}
                             description={item.description}
                             price={item.price}
                             category={item.category}
