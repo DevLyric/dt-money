@@ -15,8 +15,8 @@ function App() {
     const transactionsCtx = useTransaction();
     const [showModal, setShowModal] = useState(false);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [filterType, setFilterType] = useState("");
 
-    // Carregar os valores do LocalStorage ao iniciar o componente
     const [earnings, setEarnings] = useState(() => {
         const storedValue = localStorage.getItem("earnings");
         return storedValue ? parseInt(storedValue, 10) : 0;
@@ -49,6 +49,23 @@ function App() {
         localStorage.setItem("expenses", expenses.toString());
         localStorage.setItem("total", total.toString());
     }, [earnings, expenses, total]);
+
+    const handleSearchInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFilterType(e.target.value);
+    };
+
+    const filteredTransactions = filterType
+        ? transactionsCtx.transactions.filter(
+              item =>
+                  item.description
+                      .toLowerCase()
+                      .includes(filterType.toLowerCase()) ||
+                  item.category
+                      .toLowerCase()
+                      .includes(filterType.toLowerCase()) ||
+                  item.type.toLowerCase().includes(filterType.toLowerCase())
+          )
+        : transactionsCtx.transactions;
 
     const handleFormSubmit = (values: {
         description: string;
@@ -96,10 +113,13 @@ function App() {
                     onCloseModal={() => setShowModal(false)}
                 />
             )}
-            <SearchTransactions />
+            <SearchTransactions
+                onSearchInputValue={handleSearchInputValue}
+                value={filterType}
+            />
             <div className="container mx-auto px-5 flex flex-col gap-5">
-                {transactionsCtx.transactions.length > 0 ? (
-                    transactionsCtx.transactions.map((item, index) => (
+                {filteredTransactions.length > 0 ? (
+                    filteredTransactions.map((item, index) => (
                         <Table
                             key={index}
                             description={item.description}
